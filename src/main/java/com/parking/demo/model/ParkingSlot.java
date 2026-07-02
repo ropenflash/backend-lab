@@ -28,6 +28,11 @@ public  class ParkingSlot {
         this.slotStatus = Slotstatus.OCCUPIED;
     }
 
+    public void exitVehicle(){
+        this.vehicle=null;
+        this.slotStatus= Slotstatus.EMPTY;
+    }
+
     public boolean isAvailable() {
         return slotStatus == Slotstatus.EMPTY;
     }

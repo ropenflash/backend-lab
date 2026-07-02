@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface SlotAllocator {
 
-    public Optional<ParkingSlot> findSlot(List<ParkingSlot> parkingSlotList, VehicleType vehicleType);
+    public Optional<ParkingSlot> findSlot(VehicleType vehicleType);
 }

@@ -14,11 +14,14 @@ public class ParkingTicket {
     Instant inTime;
     Instant outTime;
 
+    TicketStatus status;
+
     public ParkingTicket(String vehicleId, String slotId){
         this.ticketId= UUID.randomUUID().toString();
         this.vehicleId= vehicleId;
         this.slotId= slotId;
         this.inTime= Instant.now();
+        this.status= TicketStatus.OPEN;
     }
 
 }
