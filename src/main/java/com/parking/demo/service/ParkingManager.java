@@ -28,18 +28,12 @@ public class ParkingManager {
 
 
 
-
-    public ParkingManager(){
-        parkingSlotRepository.save(new ParkingSlot("C1", VehicleType.CAR ));
-        parkingSlotRepository.save(new ParkingSlot("C2", VehicleType.CAR ));
-        parkingSlotRepository.save(new ParkingSlot("C3", VehicleType.BIKE ));
-    }
-
     public ParkingTicket park(Vehicle vehicle){
         Optional<ParkingSlot> slotOptional= defualtAllocator.findSlot(vehicle.getType());
         ParkingSlot slot= slotOptional.get();
         slot.assignVehicle(vehicle);
         ParkingTicket ticket= new ParkingTicket(vehicle.getId(), slot.getSlotId());
+        parkingTicketRepository.save(ticket);
         return ticket;
     }
 

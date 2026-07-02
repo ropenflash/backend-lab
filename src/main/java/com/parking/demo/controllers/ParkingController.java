@@ -1,10 +1,12 @@
 package com.parking.demo.controllers;
 
+import com.parking.demo.dto.ExitRequest;
 import com.parking.demo.dto.ParkingRequest;
 import com.parking.demo.dto.ParkingResponse;
 import com.parking.demo.model.ParkingTicket;
 import com.parking.demo.model.Vehicle;
 import com.parking.demo.service.ParkingManager;
+import com.sun.jdi.request.MethodExitRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +31,10 @@ public class ParkingController {
         response.setTicketId(ticket.getTicketId());
         response.setSlotId(ticket.getSlotId());
         return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/exit")
+    public ResponseEntity<Double> exitVehicle(@RequestBody ExitRequest request){
+       return  ResponseEntity.ok(parkingManager.exit(request.getTicketId()));
     }
 }
