@@ -5,7 +5,6 @@ import com.parking.demo.model.ParkingLot;
 import com.parking.demo.model.ParkingSlot;
 import com.parking.demo.model.VehicleType;
 import com.parking.demo.repository.ParkingLotRepository;
-import com.parking.demo.repository.ParkingSlotRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

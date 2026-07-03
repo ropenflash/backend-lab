@@ -17,14 +17,18 @@ public class DefaultAllocator implements SlotAllocator{
     @Override
     public Optional<ParkingAllocation> findSlot(VehicleType vehicleType) {
         List<ParkingLot> parkingLots= parkingLotRepository.findAll();
-        ParkingSlot slot= null;
-        ParkingLot parkingLot= null;
-        for(ParkingLot lot: parkingLots){
-             slot= lot.findAvailableSlot(vehicleType);
-             parkingLot=lot;
+        for (ParkingLot lot : parkingLots) {
 
+            ParkingSlot slot = lot.findAvailableSlot(vehicleType);
+
+            if (slot != null) {
+                return Optional.of(
+                        new ParkingAllocation(lot, slot)
+                );
             }
-        return Optional.of(new ParkingAllocation(parkingLot, slot));
+        }
+
+        return Optional.empty();
     }
 
 }

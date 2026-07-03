@@ -18,12 +18,14 @@ public class ParkingLot {
     public ParkingSlot findAvailableSlot(VehicleType vehicleType){
         for (ParkingFloor floor : floors) {
 
-            ParkingSlot slot = floor.findAvailableSlot(vehicleType).orElseThrow(()-> new RuntimeException("No slot available"));
+            Optional<ParkingSlot> slot =
+                    floor.findAvailableSlot(vehicleType);
 
-            if (slot != null) {
-                return slot;
+            if (slot.isPresent()) {
+                return slot.get();
             }
         }
+
 
         return null;
     }
