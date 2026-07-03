@@ -13,6 +13,8 @@ public class ParkingTicket {
     String ticketId;
     String vehicleId;
     String slotId;
+
+    private final String lotId;
     Instant entryTime;
     Instant exitTime;
 
@@ -20,10 +22,11 @@ public class ParkingTicket {
 
     TicketStatus status;
 
-    public ParkingTicket(String vehicleId, String slotId){
+    public ParkingTicket(String vehicleId, String lotId, String slotId){
         this.ticketId= UUID.randomUUID().toString();
         this.vehicleId= vehicleId;
         this.slotId= slotId;
+        this.lotId= lotId;
         this.entryTime= Instant.now();
         this.status= TicketStatus.OPEN;
     }

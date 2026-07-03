@@ -3,6 +3,7 @@ package com.parking.demo.model;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 public class ParkingFloor {
@@ -14,7 +15,11 @@ public class ParkingFloor {
         this.slots=slots;
     }
 
-    ParkingSlot findAvailableSlot(VehicleType vehicleType){
-        return slots.stream().filter(slot-> slot.canPark(vehicleType)).findFirst().orElseThrow(()-> new RuntimeException("No slot Avaialble"));
+    Optional<ParkingSlot> findAvailableSlot(VehicleType vehicleType){
+        return slots.stream().filter(slot-> slot.canPark(vehicleType)).findFirst();
+    }
+
+    Optional<ParkingSlot> findSlot(String id){
+        return slots.stream().filter(slot-> slot.getSlotId().equals(id)).findFirst();
     }
 }

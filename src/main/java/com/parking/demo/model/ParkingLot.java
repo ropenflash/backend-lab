@@ -3,6 +3,7 @@ package com.parking.demo.model;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 public class ParkingLot {
@@ -15,9 +16,25 @@ public class ParkingLot {
     }
 
     public ParkingSlot findAvailableSlot(VehicleType vehicleType){
-        for(ParkingFloor floor: floors){
-            return floor.findAvailableSlot(vehicleType);
+        for (ParkingFloor floor : floors) {
+
+            ParkingSlot slot = floor.findAvailableSlot(vehicleType).orElseThrow(()-> new RuntimeException("No slot available"));
+
+            if (slot != null) {
+                return slot;
+            }
         }
+
         return null;
+    }
+
+    public  ParkingSlot findSlot(String slotId){
+        for(ParkingFloor floor: floors){
+            ParkingSlot slot= floor.findSlot(slotId).orElseThrow(()-> new RuntimeException("NO slot found"));
+            if (slot != null) {
+                return slot;
+            }
+        }
+        return  null;
     }
 }

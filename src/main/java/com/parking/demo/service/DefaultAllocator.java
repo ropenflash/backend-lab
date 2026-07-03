@@ -1,12 +1,7 @@
 package com.parking.demo.service;
 
-import com.parking.demo.model.ParkingFloor;
-import com.parking.demo.model.ParkingLot;
-import com.parking.demo.model.ParkingSlot;
-import com.parking.demo.model.VehicleType;
-import com.parking.demo.repository.ParkingFloorRepository;
+import com.parking.demo.model.*;
 import com.parking.demo.repository.ParkingLotRepository;
-import com.parking.demo.repository.ParkingSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +15,16 @@ public class DefaultAllocator implements SlotAllocator{
     ParkingLotRepository parkingLotRepository;
 
     @Override
-    public Optional<ParkingSlot> findSlot(VehicleType vehicleType) {
+    public Optional<ParkingAllocation> findSlot(VehicleType vehicleType) {
         List<ParkingLot> parkingLots= parkingLotRepository.findAll();
+        ParkingSlot slot= null;
+        ParkingLot parkingLot= null;
         for(ParkingLot lot: parkingLots){
-             return Optional.ofNullable(lot.findAvailableSlot(vehicleType));
+             slot= lot.findAvailableSlot(vehicleType);
+             parkingLot=lot;
+
             }
-        return null;
+        return Optional.of(new ParkingAllocation(parkingLot, slot));
     }
 
 }

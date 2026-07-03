@@ -1,6 +1,7 @@
 package com.parking.demo.service;
 
 import com.parking.demo.model.*;
+import com.parking.demo.repository.ParkingLotRepository;
 import com.parking.demo.repository.ParkingSlotRepository;
 import com.parking.demo.repository.ParkingTicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,15 @@ public class ParkingManager {
     PricingEngine pricingEngine;
 
     @Autowired
-    ParkingSlotRepository parkingSlotRepository;
+    ParkingLotRepository parkingLotRepository;
 
 
 
     public ParkingTicket park(Vehicle vehicle){
-        ParkingSlot slot= defualtAllocator.findSlot(vehicle.getType()).orElseThrow(()-> new RuntimeException("Slot not found"));
+        ParkingAllocation allocation= defualtAllocator.findSlot(vehicle.getType()).orElseThrow(()-> new RuntimeException("Slot not found"));
+        ParkingSlot slot= allocation.getParkingSlot();
         slot.park(vehicle);
-        ParkingTicket ticket= new ParkingTicket(vehicle.getId(), slot.getSlotId());
+        ParkingTicket ticket= new ParkingTicket(vehicle.getId(), allocation.getParkingLot().getLotId() , slot.getSlotId());
         parkingTicketRepository.save(ticket);
         return ticket;
     }
@@ -42,8 +44,9 @@ public class ParkingManager {
                                 )
                         );
         ticket.complete(pricingEngine.calculateFare(ticket));
+        String lotId= ticket.getLotId();
         String slotId= ticket.getSlotId();
-        ParkingSlot slot= parkingSlotRepository.findById(slotId);
+        ParkingSlot slot=  parkingLotRepository.findById(lotId).findSlot(slotId);
         slot.unpark();
         return ticket;
     }
