@@ -2,7 +2,6 @@ package com.parking.demo.service;
 
 import com.parking.demo.model.*;
 import com.parking.demo.repository.ParkingLotRepository;
-import com.parking.demo.repository.ParkingSlotRepository;
 import com.parking.demo.repository.ParkingTicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
