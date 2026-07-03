@@ -28,7 +28,7 @@ public class ParkingTicket {
         this.status= TicketStatus.OPEN;
     }
 
-    public void close() {
+    private void close() {
         if (status == TicketStatus.CLOSED) {
             throw new IllegalStateException("Ticket already closed");
         }
@@ -39,6 +39,13 @@ public class ParkingTicket {
 
     public long getDurationInMinutes() {
         return Duration.between(entryTime, exitTime).toMinutes();
+    }
+
+    public void complete(double fare) {
+
+        close();
+
+        this.fare = fare;
     }
 
 }

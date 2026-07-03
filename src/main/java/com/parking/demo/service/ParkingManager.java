@@ -6,10 +6,6 @@ import com.parking.demo.repository.ParkingTicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ParkingManager {
@@ -29,23 +25,26 @@ public class ParkingManager {
 
 
     public ParkingTicket park(Vehicle vehicle){
-        Optional<ParkingSlot> slotOptional= defualtAllocator.findSlot(vehicle.getType());
-        ParkingSlot slot= slotOptional.get();
-        slot.assignVehicle(vehicle);
+        ParkingSlot slot= defualtAllocator.findSlot(vehicle.getType()).orElseThrow(()-> new RuntimeException("Slot not found"));
+        slot.park(vehicle);
         ParkingTicket ticket= new ParkingTicket(vehicle.getId(), slot.getSlotId());
         parkingTicketRepository.save(ticket);
         return ticket;
     }
 
     public ParkingTicket exit(String ticketId){
-        Optional<ParkingTicket> ticket= parkingTicketRepository.findById(ticketId);
-        ParkingTicket ticket1= ticket.get();
-        ticket1.close();
-        Double fare= pricingEngine.calculateFare(ticket1);
-        ticket1.setFare(fare);
-        String slotId= ticket1.getSlotId();
+        ParkingTicket ticket =
+                parkingTicketRepository
+                        .findById(ticketId)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Ticket not found"
+                                )
+                        );
+        ticket.complete(pricingEngine.calculateFare(ticket));
+        String slotId= ticket.getSlotId();
         ParkingSlot slot= parkingSlotRepository.findById(slotId);
         slot.unpark();
-        return ticket1;
+        return ticket;
     }
 }

@@ -7,12 +7,10 @@ import com.parking.demo.dto.ParkingResponse;
 import com.parking.demo.model.ParkingTicket;
 import com.parking.demo.model.Vehicle;
 import com.parking.demo.service.ParkingManager;
-import com.sun.jdi.request.MethodExitRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
 
 @RestController
 @RequestMapping("/parking")

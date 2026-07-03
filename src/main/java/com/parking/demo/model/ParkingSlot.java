@@ -23,7 +23,7 @@ public  class ParkingSlot {
         return supportedType == vehicleType && slotStatus== Slotstatus.EMPTY;
     }
 
-    public void assignVehicle(Vehicle vehicle) {
+    public void park(Vehicle vehicle) {
         this.vehicle = vehicle;
         this.slotStatus = Slotstatus.OCCUPIED;
     }
