@@ -24,6 +24,6 @@ public class InMemoryTicketRepository implements ParkingTicketRepository{
     @Override
     public void closeTicket(String ticketId) {
        ParkingTicket ticket=  parkingTicketMap.get(ticketId);
-       ticket.setStatus(TicketStatus.CLOSE);
+       ticket.setStatus(TicketStatus.CLOSED);
     }
 }

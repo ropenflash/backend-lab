@@ -37,15 +37,15 @@ public class ParkingManager {
         return ticket;
     }
 
-    public Double exit(String ticketId){
+    public ParkingTicket exit(String ticketId){
         Optional<ParkingTicket> ticket= parkingTicketRepository.findById(ticketId);
         ParkingTicket ticket1= ticket.get();
-        ticket1.setOutTime(Instant.now());
+        ticket1.close();
         Double fare= pricingEngine.calculateFare(ticket1);
+        ticket1.setFare(fare);
         String slotId= ticket1.getSlotId();
         ParkingSlot slot= parkingSlotRepository.findById(slotId);
-        parkingSlotRepository.updateParkingSlot(slot);
-        parkingTicketRepository.closeTicket(ticket1.getTicketId());
-        return fare;
+        slot.unpark();
+        return ticket1;
     }
 }

@@ -33,6 +33,16 @@ public  class ParkingSlot {
         this.slotStatus= Slotstatus.EMPTY;
     }
 
+    public void unpark() {
+
+        if (slotStatus!=Slotstatus.OCCUPIED) {
+            throw new IllegalStateException("Slot already empty");
+        }
+
+        this.vehicle = null;
+        this.slotStatus = Slotstatus.EMPTY;
+    }
+
     public boolean isAvailable() {
         return slotStatus == Slotstatus.EMPTY;
     }

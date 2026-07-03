@@ -10,7 +10,7 @@ public class DefaultPricingStrategy implements PricingStrategy{
 
     @Override
     public double calculateFare(ParkingTicket parkingTicket) {
-        long hours = Duration.between(parkingTicket.getInTime(), parkingTicket.getOutTime()).toHours();
+        long hours = parkingTicket.getDurationInMinutes();
         return hours * 20;
     }
 }
